@@ -52,14 +52,14 @@ public class Result {
 		}
 		return comps;
 	}
-	public ArrayList<String> queryDevicesWithNetListNode(Topology top,String snl) {
+	public ArrayList<String> queryDevicesWithNetListNode(Topology top,String Node) {
 		ArrayList<String> dv=new ArrayList<String>();
-		System.out.println("Devices for "+snl+" node in Topology"+top.getId());
+		System.out.println("Devices for "+Node+" node in Topology"+top.getId());
 		for (int i = 0; i < top.getComps().size; i++) {
 			Map <String,String>m=((Netlist) top.getComps().components[i].netlist).getNetList();
 			
 			for (Map.Entry<String,String> entry : m.entrySet()) {
-				if(entry.getKey().equals(snl)) {
+				if(entry.getKey().equals(Node)) {
 					dv.add(entry.getValue());
 					System.out.println(entry.getValue());
 				}
