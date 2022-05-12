@@ -1,0 +1,27 @@
+API Topology Library is a library that have a lot of functions :
+
+1- Write topologies into a JSON file.
+	Method:ResultObj.write(topology) returns JSON file.
+2- Read a topology from a JSON file
+	Method:ResultObj.read(file) returns Topology
+3- Query about which topologies are currently in the memory.
+	Method:queryTopologies() returns a topologyList
+4- Delete a given topology from memory.
+	Method:ResultObj.deleteTopology (Topology top) returns boolean
+5- Query about which devices are in a given topology.
+	Method:ResultObj.queryDevices(Topology top) return Components(have an array of components)
+6- Query about which devices are connected to a given netlist node in
+   a given topology.
+	Method:ResultObj.queryDevicesWithNetListNode(Topology top,String Node) returns ArrayList<String>
+
+Each topology has an ability to add an id and Components object
+	Topology constructor: public Topology(String id, Components comps)
+Components object carries as many components as we need
+	Components constructor: public Components() --> initialize an array to hold components
+Each Component should have a type, id, Specifications, and NetList
+	Component constructor: public Component(String id,String type,Specifications spec,Netlist nl)
+Specifications have three variables defined for each component --> default, min, max
+	Specifications constuctor: public Specifications(String id,double defult,double min,double max)
+NetList has as many variables as we need 
+	NetList constuctor: public Netlist(Map<String,String>netlist)
+	 *we give it a map with needed variables and their values to store
