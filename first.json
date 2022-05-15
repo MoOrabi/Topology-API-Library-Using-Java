@@ -29,4 +29,35 @@
    }
   }
  ]
+}{
+ "id": "top2",
+ "Components": [  
+  {
+   "type": "resistor",
+   "id": "res1",
+   "res1": {
+    "default": 100.0,
+    "min": 10.0,
+    "max": 1000.0
+   },
+   "netlist": {
+    "t1": "vdd",
+    "t2": "n1"
+   }
+  },  
+  {
+   "type": "nmos",
+   "id": "m1",
+   "m1": {
+    "default": 1.5,
+    "min": 1.0,
+    "max": 2.0
+   },
+   "netlist": {
+    "drain": "n1",
+    "gate": "vin",
+    "source": "vss"
+   }
+  }
+ ]
 }

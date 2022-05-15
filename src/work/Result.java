@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,19 +17,40 @@ import Topologies.TopologyList;
 
 public class Result {
 	TopologyList topL;
+	private File f;
+	public File getF() {
+		return f;
+	}
+	public void setF(File f) {
+		this.f = f;
+	}
+	FileWriter fileWriter;
 	public Result () {
 		topL=new TopologyList();
-	}
-	public void write(Topology topology,File f) {
-		FileWriter fileWriter=null;
+		f=new File("C:\\GitRepos\\Task3API\\first.json");
 		try {
 			fileWriter=new FileWriter(f);
-			fileWriter.write(topology.toString());
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void write(Topology topology) {
+		
+		try {
+			fileWriter.append(topology.toString());
 			topL.add(topology);
-			fileWriter.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public FileWriter getFileWriter() {
+		return fileWriter;
+	}
+	public void setFileWriter(FileWriter fileWriter) {
+		this.fileWriter = fileWriter;
 	}
 	public TopologyList queryTopologies(){
 		System.out.println("Tobologies :");
@@ -48,7 +70,7 @@ public class Result {
 		Components comps=top.getComps();
 		System.out.println("Devices in Topology "+top.getId());
 		for (int i = 0; i < comps.size; i++) {
-			System.out.println(comps.components[i].id);
+			System.out.println(comps.getComponents()[i].id);
 		}
 		return comps;
 	}
@@ -56,7 +78,7 @@ public class Result {
 		ArrayList<String> dv=new ArrayList<String>();
 		System.out.println("Devices for "+Node+" node in Topology"+top.getId());
 		for (int i = 0; i < top.getComps().size; i++) {
-			Map <String,String>m=((Netlist) top.getComps().components[i].netlist).getNetList();
+			Map <String,String>m=((Netlist) top.getComps().getComponents()[i].netlist).getNetList();
 			
 			for (Map.Entry<String,String> entry : m.entrySet()) {
 				if(entry.getKey().equals(Node)) {

@@ -1,18 +1,17 @@
-package main;
+package APITesting;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.json.JSONArray;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.XMLParserConfiguration;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import Topologies.Netlist;
 import Topologies.Specifications;
@@ -21,10 +20,18 @@ import Topologies.TopologyList;
 import work.Component;
 import work.Components;
 import work.Result;
-public class Task_3 {
 
-	public static void main(String[] args) throws IOException {
-		Result rs=new Result();
+class QueryTopologies {
+	static Result rs=new Result();
+	
+	File f;
+	@TempDir
+	Path tempDir;
+	static Topology top1;
+	static Topology top2;
+	static TopologyList tl;
+	@BeforeAll
+	static void Before_All() throws IOException{
 		Components comps=new Components();
 		Specifications specr=new Specifications("res1", 100, 10, 1000);
 		Specifications specm=new Specifications("m1", 1.5, 1, 2);
@@ -41,23 +48,19 @@ public class Task_3 {
 		Component m1=new Component("m1", "nmos", specm, netlm);
 		comps.put(res1);
 		comps.put(m1);
-		Topology top1=new Topology("top1", comps);
-		Topology top2=new Topology("top2", comps);
-		File f=new File("C:\\GitRepos\\Task3API\\first.json");
+		top1=new Topology("top1", comps);
+		top2=new Topology("top2", comps);
 		rs.write(top1);
 		rs.write(top2);
-//		TopologyList tl=rs.queryTopologies();
-//		rs.deleteTopology(top1);
-//		Components cs=rs.queryDevices(top1);
-//		ArrayList<String> dnn=rs.queryDevicesWithNetListNode(top1, "t1");
-		try {
-			
-			Topology top=rs.read(f);
-			System.out.println(top.toString());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		rs.getFileWriter().close();
+	}
+	@Test
+	void testQueryTopologies() {
+		ArrayList <Topology>al=new ArrayList<Topology>();
+		al.add(top1);
+		al.add(top2);
+		assertEquals(al, rs.queryTopologies().topologyList);
+		
 	}
 
 }

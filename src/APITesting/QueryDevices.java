@@ -1,0 +1,56 @@
+package APITesting;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
+import Topologies.Netlist;
+import Topologies.Specifications;
+import Topologies.Topology;
+import work.Component;
+import work.Components;
+import work.Result;
+
+class QueryDevices {
+	static Result rs=new Result();
+	File f;
+	@TempDir
+	Path tempDir;
+	static Topology top1;
+	static Components comps;
+	@BeforeAll
+	static void Before_All() throws IOException{
+		comps=new Components();
+		Specifications specr=new Specifications("res1", 100, 10, 1000);
+		Specifications specm=new Specifications("m1", 1.5, 1, 2);
+		Map <String,String> rMap=new LinkedHashMap<String, String>();
+		rMap.put("t1", "vdd");
+		rMap.put("t2", "n1");
+		Map <String,String> mMap=new LinkedHashMap<String, String>();
+		mMap.put("drain", "n1");
+		mMap.put("gate", "vin");
+		mMap.put("source", "vss");
+		Netlist netlr=new Netlist(rMap);
+		Netlist netlm=new Netlist(mMap);
+		Component res1=new Component("res1", "resistor", specr, netlr);
+		Component m1=new Component("m1", "nmos", specm, netlm);
+		comps.put(res1);
+		comps.put(m1);
+		top1=new Topology("top1", comps);
+		rs.write(top1);
+	}
+	@Test
+	void testQueryDevices() {
+		Component [] c=top1.getComps().getComponents();
+		assertArrayEquals(c, rs.queryDevices(top1).getComponents());
+	}
+
+}

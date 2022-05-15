@@ -4,10 +4,15 @@ import java.util.Map;
 
 public class Netlist {
 	Map<String,String> netList;
+	
 	public Map<String, String> getNetList() {
 		return netList;
 	}
 	
+	public void setNetList(Map<String, String> netList) {
+		this.netList = netList;
+	}
+
 	public Netlist(Map<String,String>netlist) {
 		this.netList=netlist;
 	}

@@ -20,6 +20,12 @@ public class Component {
 				this.netlist.toString()+"\n  }";
 		return s;
 	}
+	public Netlist getNetlist() {
+		return (Netlist)netlist;
+	}
+	public void setNetlist(Object netlist) {
+		this.netlist = netlist;
+	}
 	
 	
 }

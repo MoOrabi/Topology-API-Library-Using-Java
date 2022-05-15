@@ -1,8 +1,19 @@
 package work;
 
 public class Components {
-	final Component []components ;
-	int size;
+	private Component []components ;
+	public Component[] getComponents() {
+		Component []rComponent=new Component[Components.size];
+		for (int i = 0; i < Components.size; i++) {
+			rComponent[i]=components[i];
+		}
+		return rComponent;
+	}
+
+	public void setComponents(Component[] components) {
+		this.components = components;
+	}
+	static int size;
 	public Components() {
 		components = new Component[1000];
 		size=0;
