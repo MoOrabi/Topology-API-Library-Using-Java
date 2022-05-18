@@ -1,4 +1,4 @@
-package Topologies;
+package topologies;
 
 
 public class Specifications {

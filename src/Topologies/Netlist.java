@@ -1,9 +1,9 @@
-package Topologies;
+package topologies;
 
 import java.util.Map;
 
 public class Netlist {
-	Map<String,String> netList;
+	Map<String, String> netList;
 	
 	public Map<String, String> getNetList() {
 		return netList;
